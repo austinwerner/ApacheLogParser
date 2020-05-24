@@ -9,10 +9,10 @@
     tools:context=".activities.MainActivity">
 
     <Button
-        android:id="@+id/theButton"
+        android:id="@+id/fetch_logs_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="Parse Logs"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,8 +22,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/log_list_recycler_view"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@color/colorAccent"
+        android:scrollbarSize="6dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
     </androidx.recyclerview.widget.RecyclerView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loading_animation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:scaleType="center"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/loading_animation" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

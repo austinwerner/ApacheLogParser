@@ -14,10 +14,18 @@ class LogsViewModel : ViewModel() {
         MutableLiveData<ArrayList<LogFrequency>>()
     }
 
+    private val mState = MutableLiveData<States>()
+
+    init {
+        mState.postValue(States.DEFAULT)
+    }
+
     suspend fun requestLogs() {
+        mState.postValue(States.LOADING)
         val response = LogsRepository.requestLogs()
         val parsedData = LogFrequencyCounter.getLogFrequencyData(response)
         mFrequencyList.postValue(parsedData)
+        mState.postValue(States.LIST)
     }
 
     fun getFreqencyList():LiveData<ArrayList<LogFrequency>> {
@@ -25,6 +33,6 @@ class LogsViewModel : ViewModel() {
     }
 
     fun getState():LiveData<States> {
-        return LogsRepository.getState()
+        return mState
     }
 }
