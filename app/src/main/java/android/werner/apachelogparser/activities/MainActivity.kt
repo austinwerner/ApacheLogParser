@@ -1,10 +1,15 @@
 package android.werner.apachelogparser.activities
 
+import android.content.res.ObbScanner
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.View.VISIBLE
 import android.werner.apachelogparser.R
 import android.werner.apachelogparser.adapters.LogsAdapter
 import android.werner.apachelogparser.models.LogFrequency
+import android.werner.apachelogparser.util.States
 import android.werner.apachelogparser.viewmodels.LogsViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -28,9 +33,27 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         subscribeObservers()
+        updateLayout(mViewModel.getState()?.value)
 
         theButton.setOnClickListener {
             handleButtonClick()
+        }
+    }
+
+    private fun updateLayout(layout: States?) {
+        when (layout) {
+            States.DEFAULT-> {
+                theButton.visibility = View.VISIBLE
+                log_list_recycler_view.visibility = View.INVISIBLE
+            }
+            States.LOADING-> {
+                theButton.visibility = View.INVISIBLE
+                log_list_recycler_view.visibility = View.INVISIBLE
+            }
+            States.LIST-> {
+                theButton.visibility = View.INVISIBLE
+                log_list_recycler_view.visibility = View.VISIBLE
+            }
         }
     }
 
@@ -47,8 +70,12 @@ class MainActivity : AppCompatActivity() {
             mAdapter.setLogs(newList)
             println("List updated")
         }
-        mViewModel.getFreqencyList().observe(this,listObserver)
+        mViewModel.getFreqencyList().observe(this, listObserver)
 
+        val stateObserver = Observer<States> { newState ->
+            updateLayout(newState)
+        }
+        mViewModel.getState().observe(this, stateObserver)
     }
 
     private fun handleButtonClick() {

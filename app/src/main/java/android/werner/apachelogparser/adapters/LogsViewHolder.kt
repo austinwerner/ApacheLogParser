@@ -25,6 +25,6 @@ class LogsViewHolder(inflater: LayoutInflater, parent: ViewGroup) :
         mPage1?.text = item.firstPage
         mPage2?.text = item.secondPage
         mPage3?.text = item.thirdPage
-
+        mFrequency?.text = item.frequency.toString()
     }
 }

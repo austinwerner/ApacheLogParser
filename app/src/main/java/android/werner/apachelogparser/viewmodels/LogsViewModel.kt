@@ -3,6 +3,7 @@ package android.werner.apachelogparser.viewmodels
 import android.werner.apachelogparser.algorithm.LogFrequencyCounter
 import android.werner.apachelogparser.models.LogFrequency
 import android.werner.apachelogparser.repositories.LogsRepository
+import android.werner.apachelogparser.util.States
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,5 +22,9 @@ class LogsViewModel : ViewModel() {
 
     fun getFreqencyList():LiveData<ArrayList<LogFrequency>> {
         return mFrequencyList
+    }
+
+    fun getState():LiveData<States> {
+        return LogsRepository.getState()
     }
 }
