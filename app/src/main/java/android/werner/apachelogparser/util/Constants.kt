@@ -7,4 +7,6 @@ object Constants {
     const val APACHE_LOG_REGEX = "^(\\S+) (\\S+) (\\S+) " +
             "\\[([\\w:/]+\\s[+\\-]\\d{4})\\] \"(\\S+)" +
             " (\\S+)\\s*(\\S+)?\\s*\" (\\d{3}) (\\S+)";
+
+    const val HTTP_OK = 200
 }

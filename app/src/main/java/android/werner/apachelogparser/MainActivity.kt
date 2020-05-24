@@ -18,11 +18,11 @@ class MainActivity : AppCompatActivity() {
 
 
         theButton.setOnClickListener {
-            buttonClick()
+            handleButtonClick()
         }
     }
 
-    fun buttonClick() {
+    private fun handleButtonClick() {
         GlobalScope.launch {
             LogsViewModel.requestLogs()
         }
