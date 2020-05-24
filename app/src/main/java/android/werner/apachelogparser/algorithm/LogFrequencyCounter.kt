@@ -23,9 +23,8 @@ object LogFrequencyCounter {
             val page : String = matcher.group(6)
             val response = matcher.group(8)
 
-            // Only valid with OK response
+            // Associate pages with User's IP address
             if (Integer.parseInt(response) == Constants.HTTP_OK) {
-                // Associate pages with User's IP address
                 if (userMap.containsKey(ip)) {
                     userMap[ip]?.let {
                         it.add(page)

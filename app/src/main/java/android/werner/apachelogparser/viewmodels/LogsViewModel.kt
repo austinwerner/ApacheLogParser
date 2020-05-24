@@ -5,17 +5,21 @@ import android.werner.apachelogparser.models.LogFrequency
 import android.werner.apachelogparser.repositories.LogsRepository
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-object LogsViewModel {
+class LogsViewModel : ViewModel() {
 
-    private val mFrequencyList = MutableLiveData<List<LogFrequency>>()
+    private val mFrequencyList: MutableLiveData<ArrayList<LogFrequency>> by lazy {
+        MutableLiveData<ArrayList<LogFrequency>>()
+    }
 
     suspend fun requestLogs() {
         val response = LogsRepository.requestLogs()
-        mFrequencyList.value = LogFrequencyCounter.getLogFrequencyData(response)
+        val parsedData = LogFrequencyCounter.getLogFrequencyData(response)
+        mFrequencyList.postValue(parsedData)
     }
 
-    fun getFreqencyList():LiveData<List<LogFrequency>> {
+    fun getFreqencyList():LiveData<ArrayList<LogFrequency>> {
         return mFrequencyList
     }
 }
