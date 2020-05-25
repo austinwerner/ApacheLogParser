@@ -19,20 +19,19 @@ object LogFrequencyCounter {
         val matcher = pattern.matcher(logData);
         val userMap = HashMap<String, ArrayList<String>>();
         while (matcher.find()) {
-            val ip = matcher.group(1)
-            val page : String = matcher.group(6)
-            val response = matcher.group(8)
+            val ip: String = matcher.group(1).orEmpty()
+            val page: String = matcher.group(6).orEmpty()
+            val httpStatus: String = matcher.group(8).orEmpty()
 
             // Associate pages with User's IP address
-            if (Integer.parseInt(response) == Constants.HTTP_OK) {
+            if (Integer.parseInt(httpStatus) == Constants.HTTP_OK) {
                 if (userMap.containsKey(ip)) {
                     userMap[ip]?.let {
                         it.add(page)
                         userMap[ip] = it
                     }
                 } else {
-                    val list = ArrayList<String>()
-                    list.add(page)
+                    val list = arrayListOf<String>(page)
                     userMap[ip] = list
                 }
             }

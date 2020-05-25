@@ -1,6 +1,9 @@
 package android.werner.apachelogparser.activities
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.werner.apachelogparser.R
 import android.werner.apachelogparser.adapters.LogsAdapter
@@ -21,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var mViewModel: LogsViewModel
     private lateinit var mAdapter : LogsAdapter
+    private var mMenu : Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 log_list_recycler_view.visibility = View.INVISIBLE
                 loading_animation.visibility = View.VISIBLE
             }
-            States.LIST-> {
+            States.DATA-> {
                 fetch_logs_button.visibility = View.INVISIBLE
                 log_list_recycler_view.visibility = View.VISIBLE
                 loading_animation.visibility = View.INVISIBLE
@@ -61,6 +65,7 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, getText(R.string.error_message), Toast.LENGTH_LONG).show()
             }
         }
+        updateClearButton()
     }
 
     private fun initRecyclerView() {
@@ -91,5 +96,29 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, getText(R.string.internet_unavailable), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.clear_button, menu)
+        mMenu = menu
+        updateClearButton()
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.action_clear -> {
+                mViewModel.clearList()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun updateClearButton() {
+        mMenu?.findItem(R.id.action_clear)?.isVisible =
+            mViewModel.getState().value == States.DATA
     }
 }

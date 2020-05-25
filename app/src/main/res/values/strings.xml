@@ -2,4 +2,6 @@
     <string name="app_name">Apache Log Parser</string>
     <string name="internet_unavailable">Internet Unavailable</string>
     <string name="error_message">An error has occurred. Please try again.</string>
+    <string name="parse_logs">Parse Logs</string>
+    <string name="clear_list">Clear List</string>
 </resources>

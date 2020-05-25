@@ -26,7 +26,7 @@ class LogsViewModel : ViewModel() {
         if (response.isNotEmpty()) {
             val parsedData = LogFrequencyCounter.getLogFrequencyData(response)
             mFrequencyList.postValue(parsedData)
-            mState.postValue(States.LIST)
+            mState.postValue(States.DATA)
         } else {
             mState.postValue(States.ERROR)
         }
@@ -38,5 +38,10 @@ class LogsViewModel : ViewModel() {
 
     fun getState():LiveData<States> {
         return mState
+    }
+
+    fun clearList() {
+        mState.postValue(States.DEFAULT)
+        mFrequencyList.postValue(ArrayList())
     }
 }
