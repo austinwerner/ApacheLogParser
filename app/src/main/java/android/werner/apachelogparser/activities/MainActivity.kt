@@ -46,21 +46,25 @@ class MainActivity : AppCompatActivity() {
             States.DEFAULT-> {
                 fetch_logs_button.visibility = View.VISIBLE
                 log_list_recycler_view.visibility = View.INVISIBLE
+                fast_scroller.visibility = View.INVISIBLE
                 loading_animation.visibility = View.INVISIBLE
             }
             States.LOADING-> {
                 fetch_logs_button.visibility = View.INVISIBLE
                 log_list_recycler_view.visibility = View.INVISIBLE
+                fast_scroller.visibility = View.INVISIBLE
                 loading_animation.visibility = View.VISIBLE
             }
             States.DATA-> {
                 fetch_logs_button.visibility = View.INVISIBLE
                 log_list_recycler_view.visibility = View.VISIBLE
+                fast_scroller.visibility = View.VISIBLE
                 loading_animation.visibility = View.INVISIBLE
             }
             States.ERROR-> {
                 fetch_logs_button.visibility = View.VISIBLE
                 log_list_recycler_view.visibility = View.INVISIBLE
+                fast_scroller.visibility = View.INVISIBLE
                 loading_animation.visibility = View.INVISIBLE
                 Toast.makeText(this, getText(R.string.error_message), Toast.LENGTH_LONG).show()
             }
@@ -74,6 +78,8 @@ class MainActivity : AppCompatActivity() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
         }
+        fast_scroller.setRecyclerView(log_list_recycler_view)
+        log_list_recycler_view.setOnScrollListener(fast_scroller.onScrollListener)
     }
 
     private fun subscribeObservers() {
@@ -107,7 +113,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle item selection
         return when (item.itemId) {
             R.id.action_clear -> {
                 mViewModel.clearList()

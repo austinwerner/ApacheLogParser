@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/parse_logs"
-        android:textSize="24dp"
-        android:padding="8dp"
+        android:textSize="@dimen/button_text_size"
+        android:padding="@dimen/button_padding"
         android:background="@color/colorAccentGreen"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,13 +25,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/log_list_recycler_view"
-        app:fastScrollEnabled="true"
-        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
-        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
-        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_marginRight="@dimen/recycler_view_margin"
+        android:id="@+id/log_list_recycler_view"/>
+
+    <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
+        android:id="@+id/fast_scroller"
+        android:layout_width="@dimen/fast_scroll_width"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rfs_barColor="@color/colorAccentYellow"
+        app:rfs_handleColor="@color/colorPrimary"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/loading_animation"

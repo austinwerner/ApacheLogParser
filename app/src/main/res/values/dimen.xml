@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="fast_scroll_width">15dp</dimen>
+    <dimen name="recycler_view_margin">13dp</dimen>
+    <dimen name="button_padding">8dp</dimen>
+    <dimen name="button_text_size">24sp</dimen>
+    <dimen name="card_corner_radius">4dp</dimen>
+    <dimen name="list_number_text_size">42sp</dimen>
+</resources>

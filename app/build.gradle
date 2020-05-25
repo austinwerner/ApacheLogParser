@@ -54,4 +54,7 @@ dependencies {
 
     def lottieVersion = '3.4.0'
     implementation "com.airbnb.android:lottie:$lottieVersion"
+
+    def fastScrollVersion = '0.1.3'
+    implementation "xyz.danoz:recyclerviewfastscroller:$fastScrollVersion"
 }
