@@ -22,10 +22,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/log_list_recycler_view"
-        android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@color/colorAccent"
-        android:scrollbarSize="6dp"
-        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+        app:fastScrollEnabled="true"
+        app:fastScrollHorizontalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollHorizontalTrackDrawable="@drawable/line_drawable"
+        app:fastScrollVerticalThumbDrawable="@drawable/thumb_drawable"
+        app:fastScrollVerticalTrackDrawable="@drawable/line_drawable">
     </androidx.recyclerview.widget.RecyclerView>
 
     <com.airbnb.lottie.LottieAnimationView

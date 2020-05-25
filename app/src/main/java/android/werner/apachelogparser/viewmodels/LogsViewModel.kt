@@ -23,12 +23,16 @@ class LogsViewModel : ViewModel() {
     suspend fun requestLogs() {
         mState.postValue(States.LOADING)
         val response = LogsRepository.requestLogs()
-        val parsedData = LogFrequencyCounter.getLogFrequencyData(response)
-        mFrequencyList.postValue(parsedData)
-        mState.postValue(States.LIST)
+        if (response.isNotEmpty()) {
+            val parsedData = LogFrequencyCounter.getLogFrequencyData(response)
+            mFrequencyList.postValue(parsedData)
+            mState.postValue(States.LIST)
+        } else {
+            mState.postValue(States.ERROR)
+        }
     }
 
-    fun getFreqencyList():LiveData<ArrayList<LogFrequency>> {
+    fun getFrequencyList():LiveData<ArrayList<LogFrequency>> {
         return mFrequencyList
     }
 
