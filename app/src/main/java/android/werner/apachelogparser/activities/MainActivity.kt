@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
 
         initRecyclerView()
         subscribeObservers()
-        updateState(mViewModel.getState().value)
 
         fetch_logs_button.setOnClickListener {
             handleButtonClick()
