@@ -5,13 +5,16 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.werner.apachelogparser.BR
 import android.werner.apachelogparser.R
 import android.werner.apachelogparser.adapters.LogsAdapter
+import android.werner.apachelogparser.databinding.ActivityMainBinding
 import android.werner.apachelogparser.extensions.isConnected
 import android.werner.apachelogparser.models.LogFrequency
 import android.werner.apachelogparser.util.States
 import android.werner.apachelogparser.viewmodels.LogsViewModel
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -22,22 +25,19 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var mViewModel: LogsViewModel
-    private lateinit var mAdapter : LogsAdapter
+    private val mViewModel by viewModels<LogsViewModel>()
+    private val mAdapter = LogsAdapter()
     private var mMenu : Menu? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        mViewModel = ViewModelProviders.of(this).get(LogsViewModel::class.java)
+        val binding: ActivityMainBinding = ActivityMainBinding.inflate(layoutInflater)
+        binding.setVariable(BR.viewmodel,mViewModel)
+        setContentView(binding.root)
 
         initRecyclerView()
         subscribeObservers()
-
-        fetch_logs_button.setOnClickListener {
-            handleButtonClick()
-        }
     }
 
     private fun updateState(state: States?) {
@@ -72,7 +72,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        mAdapter = LogsAdapter()
         log_list_recycler_view.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
@@ -82,25 +81,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun subscribeObservers() {
-        val listObserver = Observer<ArrayList<LogFrequency>> { newList ->
+        val listObserver = Observer<List<LogFrequency>> { newList ->
             mAdapter.setLogs(newList)
         }
-        mViewModel.getFrequencyList().observe(this, listObserver)
+        mViewModel.frequencyList.observe(this, listObserver)
 
         val stateObserver = Observer<States> { newState ->
             updateState(newState)
         }
-        mViewModel.getState().observe(this, stateObserver)
-    }
-
-    private fun handleButtonClick() {
-        if (isConnected) {
-            GlobalScope.launch {
-                mViewModel.requestLogs()
-            }
-        } else {
-            Toast.makeText(this, getText(R.string.internet_unavailable), Toast.LENGTH_SHORT).show()
-        }
+        mViewModel.state.observe(this, stateObserver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -123,6 +112,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateClearButton() {
         mMenu?.findItem(R.id.action_clear)?.isVisible =
-            mViewModel.getState().value == States.DATA
+            mViewModel.state.value == States.DATA
     }
 }

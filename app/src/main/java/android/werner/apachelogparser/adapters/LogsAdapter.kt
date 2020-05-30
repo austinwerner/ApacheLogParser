@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class LogsAdapter() : RecyclerView.Adapter<LogsViewHolder>() {
 
-    private var mList = ArrayList<LogFrequency>()
+    private var mList: List<LogFrequency> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LogsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -21,7 +21,7 @@ class LogsAdapter() : RecyclerView.Adapter<LogsViewHolder>() {
 
     override fun getItemCount(): Int = mList.size
 
-    fun setLogs(logs: ArrayList<LogFrequency>) {
+    fun setLogs(logs: List<LogFrequency>) {
         mList = logs
         notifyDataSetChanged()
     }

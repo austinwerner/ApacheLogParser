@@ -37,7 +37,7 @@ class FrequencyCounterUnitTest {
             "123.4.5.1 - - [03/Sep/2013:18:34:48 -0600] \"GET /page2/ HTTP/1.1\" 500 3327 \"-\" \"Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:23.0) Gecko/20100101 Firefox/23.0\"\n"
 
         val frequency = LogFrequencyCounter.getLogFrequencyData(mockLog)
-        val expectedLog1 = LogFrequency("/page1/", "/page2", "/page3", 2)
+        val expectedLog1 = LogFrequency("/page1/", "/page2/", "/page3/", 2)
         assertEquals(frequency[0], expectedLog1)
     }
 
