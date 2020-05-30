@@ -5,6 +5,7 @@
 
     <data>
         <import type="android.view.View"/>
+        <import type="android.werner.apachelogparser.util.States"/>
         <variable
             name="viewmodel"
             type="android.werner.apachelogparser.viewmodels.LogsViewModel" />
@@ -13,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activities.MainActivity">
+        tools:context=".ui.MainActivity">
 
         <Button
             android:id="@+id/fetch_logs_button"
@@ -28,13 +29,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:onClick="@{viewmodel::requestLogs}"/>
+            android:onClick="@{viewmodel::requestLogs}"
+            android:visibility="@{viewmodel.state == States.DEFAULT ? View.VISIBLE : View.GONE}"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/recycler_view_margin"
-            android:id="@+id/log_list_recycler_view" />
+            android:id="@+id/log_list_recycler_view"
+            android:visibility="@{viewmodel.state == States.DATA ? View.VISIBLE : View.GONE}"/>
 
         <xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
             android:id="@+id/fast_scroller"
@@ -43,7 +46,8 @@
             android:layout_alignParentEnd="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:rfs_barColor="@color/colorAccentYellow"
-            app:rfs_handleColor="@color/colorPrimary"/>
+            app:rfs_handleColor="@color/colorPrimary"
+            android:visibility="@{viewmodel.state == States.DATA ? View.VISIBLE : View.GONE}"/>
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/loading_animation"
@@ -51,14 +55,14 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:scaleType="center"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/loading_animation" />
+            app:lottie_rawRes="@raw/loading_animation"
+            android:visibility="@{viewmodel.state == States.LOADING ? View.VISIBLE : View.GONE}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
