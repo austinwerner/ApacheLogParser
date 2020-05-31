@@ -1,4 +1,4 @@
-package android.werner.apachelogparser.ui
+package android.werner.apachelogparser.activities
 
 import android.os.Bundle
 import android.view.Menu

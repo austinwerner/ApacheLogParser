@@ -1,4 +1,4 @@
-package android.werner.apachelogparser.requests
+package android.werner.apachelogparser.network
 
 import android.werner.apachelogparser.util.Constants
 import okhttp3.Call

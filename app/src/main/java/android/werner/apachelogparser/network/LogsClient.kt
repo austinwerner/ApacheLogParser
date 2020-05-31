@@ -1,4 +1,4 @@
-package android.werner.apachelogparser.requests
+package android.werner.apachelogparser.network
 
 import android.util.Log
 import android.werner.apachelogparser.util.NetworkResult
