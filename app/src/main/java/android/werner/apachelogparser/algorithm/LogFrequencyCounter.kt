@@ -1,5 +1,7 @@
 package android.werner.apachelogparser.algorithm
 
+import android.werner.apachelogparser.extensions.addToList
+import android.werner.apachelogparser.extensions.incrementIntValue
 import android.werner.apachelogparser.models.LogFrequency
 import android.werner.apachelogparser.util.Constants
 import java.util.regex.Pattern
@@ -23,15 +25,7 @@ object LogFrequencyCounter {
 
             // Associate pages with User's IP address
             if (Integer.parseInt(httpStatus) == Constants.HTTP_OK) {
-                if (userMap.containsKey(ip)) {
-                    userMap[ip]?.let {
-                        it.add(page)
-                        userMap[ip] = it
-                    }
-                } else {
-                    val list = mutableListOf(page)
-                    userMap[ip] = list
-                }
+                userMap.addToList(ip,page)
             }
         }
         return userMap
@@ -46,13 +40,7 @@ object LogFrequencyCounter {
                 // Create key out of 3 consecutive pages
                 val key = it.value[i] + " " + it.value[i+1]  + " " + it.value[i+2]
                 i++
-
-                if (frequencyMap.containsKey(key)) {
-                    val curVal = frequencyMap[key]
-                    frequencyMap[key] = curVal!!.plus(1)
-                } else {
-                    frequencyMap[key] = 1
-                }
+                frequencyMap.incrementIntValue(key)
             }
         }
         return frequencyMap
