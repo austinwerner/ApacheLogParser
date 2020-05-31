@@ -34,7 +34,7 @@ class LogsViewModel : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
             when( val response = LogsRepository.requestLogs() ) {
                 is NetworkResult.Success -> {
-                    mFrequencyList.postValue(LogFrequencyCounter.getLogFrequencyData(response.value))
+                    mFrequencyList.postValue(LogFrequencyCounter.getLogFrequencyData(response.value.readText()))
                     mState.postValue(States.DATA)
                 }
                 is NetworkResult.Error -> {
